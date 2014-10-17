@@ -1,4 +1,9 @@
+"""
+Given two lists of SNPs from SNP_call:
+		1 	partition them into shared SNPs, SNPs from list 1 only, and SNPs from list 2 only
+		2 	
 
+"""
 
 
 import matplotlib 
@@ -9,11 +14,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-
-
 parent1_SNPS_file = sys.argv[1]
-parent2_SNPS_file = sys.argv[2]
-hybrid_SNPS_file = sys.argv[3]
+title1 = sys.argv[2]
+parent2_SNPS_file = sys.argv[3]
+title2 = sys.argv[4]
+hybrid_SNPS_file = sys.argv[5]
+titleHyb = sys.argv[6]
 
 
 
@@ -88,11 +94,11 @@ def archimedes(points):
 	return coord, density
 
 
-def write_to_varwig(coords, density, phial, colour):
+def write_to_varwig(coords, density, phial, colour, name):
         vial = open(phial, 'w')
         vial.write('browser position chr%s\n'%chrom)
         vial.write('browser hide all\n')
-        vial.write('track type=wiggle_0 name="varStep" description="varStep format" visibility=full autoScale=off viewLimits=0:%s color=%s graphType=points priority=20\n'%tuple([max(density), colour]))
+        vial.write('track type=wiggle_0 name="%s" description="varStep format" visibility=full autoScale=off viewLimits=0:%s color=%s graphType=points priority=20\n'%tuple([name, max(density), colour]))
         vial.write('variableStep chrom=chr%s\n'%tuple([chrom]))
         for pair in zip(coords, density):
                 vial.write('%s\t%s\n'%tuple(pair))
@@ -106,14 +112,15 @@ shared_SNPs, disjoint1_SNPs, disjoint2_SNPs = pool_snps(parent1_SNPS_file, paren
 introgress1, introgress2 = snp_grep(disjoint1_SNPs, disjoint2_SNPs, hybrid_SNPS_file)
 
 coord, dens = archimedes(disjoint1_SNPs.keys())
-write_to_varwig(coord, dens, 'parent1.wig', '255,0,0')
+write_to_varwig(coord, dens, '%s_disjoint.wig'%title1, '255,0,0', '%s disjoint SNP density'%title1)
 coord, dens = archimedes(disjoint2_SNPs.keys())
-write_to_varwig(coord, dens, 'parent2.wig', '0,0,255')
+write_to_varwig(coord, dens, '%s_disjoint.wig'%title2, '0,0,255', '%s disjoint SNP density'%title1)
+
 
 coord, dens = archimedes(introgress1)
-write_to_varwig(coord, dens, 'hybrid_via_parent1.wig', '255,0,0')
+write_to_varwig(coord, dens, '%s_SNPs_in_%s.wig'%tuple([title1, titleHyb]), '255,0,0', '%s-specific SNP density in %s'%tuple([title1, titleHyb]))
 coord, dens = archimedes(introgress2)
-write_to_varwig(coord, dens, 'hybrid_via_parent2.wig', '0,0,255')
+write_to_varwig(coord, dens, '%s_SNPs_in_%s.wig'%tuple([title2, titleHyb]), '0,0,255', '%s-specific SNP density in %s'%tuple([title2, titleHyb]))
 
 
 
