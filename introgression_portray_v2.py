@@ -136,7 +136,7 @@ def write_to_bed(points, phial, colour, name):
 	vial.write('browser hide all')
 	vial.write('track name="%s" description="%s" visibility=1 itemRgb="On"\n'%tuple([name,name]))
 	for point in points:
-		via.write('%s\t%s\t%s\therpderp\t0\t+\t%s\t%s\t%s\n'%tuple([chrom, point, point+1, point, point+1, colour]))
+		vial.write('%s\t%s\t%s\therpderp\t0\t+\t%s\t%s\t%s\n'%tuple([chrom, point, point+1, point, point+1, colour]))
 	vial.close()
 
 
