@@ -152,7 +152,7 @@ print "%s SNPs were found shared between %s and %s"%tuple([len(shared_SNPs), tit
 print "%s contained %s SNPs unique to %s"%tuple([titleHyb, len(present1), title1])
 print "%s was missing %s SNPs unique to %s"%tuple([titleHyb, len(absent1), title1])
 print "%s contained %s SNP unique to %s"%tuple([titleHyb, len(present2), title2])
-print "%s was missing %s SNPs unique to %s"%tuple([titleHyb, len(absent2), title2)])
+print "%s was missing %s SNPs unique to %s"%tuple([titleHyb, len(absent2), title2])
 print "%s contained %s SNPs unseen in either %s or %s"%tuple([titleHyb, len(n00bs), title1, title2])
 print "\t\t~~~END REPORT~~~\t\t"
 
