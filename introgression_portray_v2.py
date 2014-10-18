@@ -24,7 +24,7 @@ titleHyb = sys.argv[6]
 
 
 chrom='2L'
-box_size=10**2
+box_size=10**3
 
 
 def pool_snps(parent1, parent2):
