@@ -79,6 +79,8 @@ def snp_grep(parent1, parent2, hybrid):
 				parent2_present.append(key)
 			else:	#	If the site doesn't have a recognized SNP, that SNP has gone missing.
 				parent1_absent.append(key)
+		else:	#	if the key is not listed as a hybrid SNP, the site is definitely missing!
+			parent1_absent.append(key)
 	for key in parent2.keys():	#		For each SNP site in P1...
 		if key in hybrid_snps.keys():		#	if the site is variable in Hybrid...
 			if parent2[key] == 	hybrid_snps[key]:#		and if the variation is the same...
@@ -88,6 +90,9 @@ def snp_grep(parent1, parent2, hybrid):
 				parent1_present.append(key)
 			else:	#	If the site doesn't have a recognized SNP, that SNP has gone missing.
 				parent2_absent.append(key)
+		else:	#	if the key is not listed as a hybrid SNP, the site is definitely missing!
+			parent2_absent.append(key)
+
 	for key in hybrid_snps.keys():	#	collect SNPs unique it the hybrid
 		if not (key in parent1.keys() or key in parent2.keys()):	#If the SNP is at a unique site...
 			new_snps[key] = hybrid_snps[key]
