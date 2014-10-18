@@ -8,9 +8,8 @@ import os
 
 
 parental_vcf = sys.argv[1]		#input variability data
-parental_pileup = sys.argv[2]	#input alignment (for coverage measure)
-parental_bam = sys.argv[3]		#this too
-SNP_log = sys.argv[4]			#output file for Good SNPs
+parental_bam = sys.argv[2]		#for coverage data
+SNP_log = sys.argv[3]			#output file for Good SNPs
 
 
 parser = vcf.Reader(open(parental_vcf))
