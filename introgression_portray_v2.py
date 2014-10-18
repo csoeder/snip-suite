@@ -61,6 +61,7 @@ def snp_grep(parent1, parent2, hybrid):
 	parent2_present = []
 	parent1_absent = []
 	parent2_absent = []
+	new_snps = {}
 	hybrid_snps={}
 
 	with open(hybrid, 'rb') as csvfile:
@@ -87,13 +88,16 @@ def snp_grep(parent1, parent2, hybrid):
 				parent1_present.append(key)
 			else:	#	If the site doesn't have a recognized SNP, that SNP has gone missing.
 				parent2_absent.append(key)
+	for key in hybrid_snps.keys():	#	collect SNPs unique it the hybrid
+		if not (key in parent1.keys() or key in parent2.keys()):	#If the SNP is at a unique site...
+			new_snps[key] = hybrid_snps[key]
 
 	parent1_present = list(set(parent1_present))
 	parent2_present = list(set(parent2_present))
 	parent1_absent = list(set(parent1_absent))
 	parent2_absent = list(set(parent2_absent))
 
-	return parent1_present, parent2_present, parent1_absent, parent2_absent
+	return parent1_present, parent2_present, parent1_absent, parent2_absent, new_snps
 
 
 def archimedes(points):
@@ -137,9 +141,22 @@ def write_to_bed(points, phial, colour, name):
 
 
 
-
 shared_SNPs, disjoint1_SNPs, disjoint2_SNPs = pool_snps(parent1_SNPS_file, parent2_SNPS_file)
-present1, present2, absent1, absent2 = snp_grep(disjoint1_SNPs, disjoint2_SNPs, hybrid_SNPS_file)
+present1, present2, absent1, absent2, n00bs = snp_grep(disjoint1_SNPs, disjoint2_SNPs, hybrid_SNPS_file)
+
+print "\t\tREPORT:\t%s\t\t"%chrom
+print "Between %s and %s, %s SNP variants were logged."%tuple([title1, title2, len(shared_SNPs)+len(disjoint1_SNPs)+len(disjoint2_SNPs)])
+print "%s SNPs were identified unique to %s"%tuple([len(disjoint1_SNPs), title1])
+print "%s SNPs were identified unique to %s"%tuple([len(disjoint2_SNPs), title2])
+print "%s SNPs were found shared between %s and %s"%tuple([len(shared_SNPs), title1, title2])
+print "%s contained %s SNPs unique to %s"%tuple([titleHyb, len(present1), title1])
+print "%s was missing %s SNPs unique to %s"%tuple([titleHyb, len(absent1), title1])
+print "%s contained %s SNP unique to %s"%tuple([titleHyb, len(present2), title2])
+print "%s was missing %s SNPs unique to %s"%tuple([titleHyb, len(absent2), title2)
+print "%s contained %s SNPs unseen in either %s or %s"%tuple([titleHyb, len(n00bs), title1, title2])
+print "\t\t~~~END REPORT~~~\t\t"
+
+
 
 write_to_bed(present1, '%s_SNPs_present_in_%s.bed'%tuple([title1, titleHyb]), '255,0,0', '%s SNPs in %s'%tuple([title1, titleHyb]))
 write_to_bed(present2, '%s_SNPs_present_in_%s.bed'%tuple([title2, titleHyb]), '0,0,255', '%s SNPs in %s'%tuple([title2, titleHyb]))
