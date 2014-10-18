@@ -18,9 +18,9 @@ print os.system('pwd')
 print os.system('ls')
 
 for rec in parser:
-	if rec.is_snp and float(sum(rec.INFO['DP4'][-2:]))/sum(rec.INFO['DP4']) > 0 :#if it's a SNP and it's called by more than 75% of the reads.
+	if rec.is_snp and float(sum(rec.INFO['DP4'][-2:]))/sum(rec.INFO['DP4']) > 0 and float(rec.INFO['DP']) > 12 :
+#																		#if it's a SNP and it's called by more than 75% of the reads, and there are 12+ reads covering.
 		#																		Sekelsky data are monoploid, so no heterozygosity worries.
-
 
 		eff = open('%s.bed'%SNP_log, 'w')
 		eff.write('%s\t%s\t%s\n'%tuple([rec.CHROM, int(rec.POS), int(rec.POS)+1]))
@@ -36,7 +36,7 @@ for rec in parser:
 		os.remove('%s.bed'%SNP_log)	#	cleanup
 		#coverage = 0
 		#reg_cov = 0
-		phial.write('%s\t%s\t%s\t%s\t%s\t%s\n'%tuple([rec.CHROM, rec.POS, rec.REF, '%s'*len(rec.ALT)%tuple(rec.ALT), coverage, reg_cov]))
+		phial.write('%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n'%tuple([rec.CHROM, rec.POS, rec.REF, '%s'*len(rec.ALT)%tuple(rec.ALT), coverage, reg_cov, rec.INFO['DP'], rec.QUAL]))
 		#			Writes a flatfile of approved SNPs:	Chromome	Position	Reference	Alternate alleles	Coverage at-site 	Covereage +/- 1kb
 
 
