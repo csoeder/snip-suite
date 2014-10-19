@@ -57,12 +57,13 @@ def snp_grep(parent1, parent2, hybrid):
 	look at each SNP site in the two dicts. Classify each as present or absent 
 	in the hybrid genome
 	"""
-	parent1_present = []
-	parent2_present = []
-	parent1_absent = []
-	parent2_absent = []
-	new_snps = {}
-	hybrid_snps={}
+	parent1_present = []#	SNPs from p1 which are present
+	parent2_present = []#	SNPs from p2 which are present
+	parent1_absent = []#	SNPs from p1 which are absent
+	parent2_absent = []#	SNPs from p2 which are absent
+	new_snps = {}#			SNPs which are unique to hybric
+	hypervars = {}#			SNPs which are a third polymorph of a site variable between p1 and p2
+	hybrid_snps={}#			SNPs which are present in the hybrid
 
 	with open(hybrid, 'rb') as csvfile:
 		spamreader = csv.reader(csvfile, delimiter='\t')
@@ -96,13 +97,19 @@ def snp_grep(parent1, parent2, hybrid):
 	for key in hybrid_snps.keys():	#	collect SNPs unique it the hybrid
 		if not (key in parent1.keys() or key in parent2.keys()):	#If the SNP is at a unique site...
 			new_snps[key] = hybrid_snps[key]
+		if (key in parent1.keys() and hybrid_snps[key] not in parent1[key]):
+			new_snps[key] = hybrid_snps[key] 
+			hypervars[key] = hybrid_snps[key] 
+		if (key in parent2.keys() and hybrid_snps[key] not in parent2[key]):
+			new_snps[key] = hybrid_snps[key] 
+			hypervars[key] = hybrid_snps[key] 
 
 	parent1_present = list(set(parent1_present))
 	parent2_present = list(set(parent2_present))
 	parent1_absent = list(set(parent1_absent))
 	parent2_absent = list(set(parent2_absent))
 
-	return parent1_present, parent2_present, parent1_absent, parent2_absent, new_snps
+	return parent1_present, parent2_present, parent1_absent, parent2_absent, new_snps, hypervars
 
 
 def archimedes(points):
@@ -147,7 +154,7 @@ def write_to_bed(points, phial, colour, name):
 
 
 shared_SNPs, disjoint1_SNPs, disjoint2_SNPs = pool_snps(parent1_SNPS_file, parent2_SNPS_file)
-present1, present2, absent1, absent2, n00bs = snp_grep(disjoint1_SNPs, disjoint2_SNPs, hybrid_SNPS_file)
+present1, present2, absent1, absent2, n00bs, hypervars = snp_grep(disjoint1_SNPs, disjoint2_SNPs, hybrid_SNPS_file)
 
 print "\t\tREPORT:\t%s\t\t"%chrom
 print "Between %s and %s, %s SNP variants were logged."%tuple([title1, title2, len(shared_SNPs)+len(disjoint1_SNPs)+len(disjoint2_SNPs)])
@@ -159,6 +166,7 @@ print "%s was missing %s SNPs unique to %s"%tuple([titleHyb, len(absent1), title
 print "%s contained %s SNP unique to %s"%tuple([titleHyb, len(present2), title2])
 print "%s was missing %s SNPs unique to %s"%tuple([titleHyb, len(absent2), title2])
 print "%s contained %s SNPs unseen in either %s or %s"%tuple([titleHyb, len(n00bs), title1, title2])
+print "\t\t including %s sites representing a third polymorphism"%tuple([len(hypervars)])
 print "\t\t~~~END REPORT~~~\t\t"
 
 
