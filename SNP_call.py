@@ -12,12 +12,12 @@ parental_bam = sys.argv[2]		#for coverage data
 SNP_log = sys.argv[3]			#output file for Good SNPs
 
 try:
-	agreement = argv[4]
+	agreement = sys.argv[4]		#set the threshold for read agreement
 except IndexError:
 	agreement = 0.75
 
 try:
-	cov_thresh = argv[5]
+	cov_thresh = sys.argv[5]	#set the threshold for coverage
 except IndexError:
 	cov_thresh = 10
 
