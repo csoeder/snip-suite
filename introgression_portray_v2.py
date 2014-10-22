@@ -27,7 +27,7 @@ titleHyb = sys.argv[6]
 chrom='2L'
 box_size=10**3
 missing_SNP_threshold = 10	#hybrid must have at least this coverage to declare that it is missing a parental SNP
-
+#Super awesome
 
 def pool_snps(parent1, parent2):
 	""" given two .SNPS files, this loads them into python dict objects, then outputs
