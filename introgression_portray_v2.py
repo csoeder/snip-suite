@@ -12,6 +12,7 @@ import csv
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
+from subprocess import call, check_output
 
 
 parent1_SNPS_file = sys.argv[1]
@@ -25,6 +26,7 @@ titleHyb = sys.argv[6]
 
 chrom='2L'
 box_size=10**3
+missing_SNP_threshold = 10	#hybrid must have at least this coverage to declare that it is missing a parental SNP
 
 
 def pool_snps(parent1, parent2):
@@ -65,6 +67,14 @@ def snp_grep(parent1, parent2, hybrid):
 	hypervars = {}#			SNPs which are a third polymorph of a site variable between p1 and p2
 	hybrid_snps={}#			SNPs which are present in the hybrid
 
+	def grep_coverage(chro, point):
+		f = open('test.bed', 'w')
+		f.write('%s\t%s\t%s\n'%tuple([chro, point, point+1]))
+		f.close()
+		site_cov = int(check_output(['bedtools', 'intersect', '-a', '%s/%scoverage.bedgraph'%tuple([titleHyb, titleHyb]), '-b', 'test.bed' ]).split('\t')[-1])
+		call(['rm', 'test.bed'])		
+		return site_cov
+
 	with open(hybrid, 'rb') as csvfile:
 		spamreader = csv.reader(csvfile, delimiter='\t')
 		for row in spamreader:
@@ -78,10 +88,12 @@ def snp_grep(parent1, parent2, hybrid):
 			elif (key in parent2.keys() and parent2[key] == hybrid_snps[key]):
 				#	If site is also variable in P2, and the variation matches, then the P2 SNP is here, and this site is not 'absent' 
 				parent2_present.append(key)
-			else:	#	If the site doesn't have a recognized SNP, that SNP has gone missing.
-				parent1_absent.append(key)
-		else:	#	if the key is not listed as a hybrid SNP, the site is definitely missing!
-			parent1_absent.append(key)
+			else:	#	If the site doesn't have a recognized SNP, that SNP has gone missing. Where is it???
+				if grep_coverage(chrom, key, key+1) > missing_SNP_threshold:#	If we have sufficient coverage...
+					parent1_absent.append(key)#		Declare this SNP absent
+		else:	#	if the key is not listed as a hybrid SNP, the site is missing! Where is it?
+			if grep_coverage(chrom, key, key+1) > missing_SNP_threshold:#	If we have sufficient coverage...
+				parent1_absent.append(key)#		Declare this SNP absent
 	for key in parent2.keys():	#		For each SNP site in P1...
 		if key in hybrid_snps.keys():		#	if the site is variable in Hybrid...
 			if parent2[key] == 	hybrid_snps[key]:#		and if the variation is the same...
@@ -89,10 +101,12 @@ def snp_grep(parent1, parent2, hybrid):
 			elif (key in parent1.keys() and parent1[key] == hybrid_snps[key]):
 				#	If site is also variable in P2, and the variation matches, then the P2 SNP is here, and this site is not 'absent' 
 				parent1_present.append(key)
-			else:	#	If the site doesn't have a recognized SNP, that SNP has gone missing.
-				parent2_absent.append(key)
+			else:	#	If the site doesn't have a recognized SNP, that SNP has gone missing. Where is it???
+				if grep_coverage(chrom, key, key+1) > missing_SNP_threshold:#	If we have sufficient coverage...
+					parent2_absent.append(key)#		Declare it absent
 		else:	#	if the key is not listed as a hybrid SNP, the site is definitely missing!
-			parent2_absent.append(key)
+			if grep_coverage(chrom, key, key+1) > missing_SNP_threshold:#	If we have sufficient coverage...
+				parent2_absent.append(key)#	Declare it absent
 
 	for key in hybrid_snps.keys():	#	collect SNPs unique it the hybrid
 		if not (key in parent1.keys() or key in parent2.keys()):	#If the SNP is at a unique site...
