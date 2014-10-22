@@ -12,27 +12,22 @@ parental_bam = sys.argv[2]		#for coverage data
 SNP_log = sys.argv[3]			#output file for Good SNPs
 
 try:
-	agreement = sys.argv[4]		#set the threshold for read agreement
+	agreement = float(sys.argv[4])	#set the threshold for read agreement
 except IndexError:
 	agreement = 0.75
 
 try:
-	cov_thresh = sys.argv[5]	#set the threshold for coverage
+	cov_thresh = float(sys.argv[5])	#set the threshold for coverage
 except IndexError:
 	cov_thresh = 10
 
-
-
 parser = vcf.Reader(open(parental_vcf))
 phial = open('%s.SNPS'%SNP_log, 'w')
-print os.system('pwd')
-print os.system('ls')
 
 for rec in parser:
 	if rec.is_snp and float(sum(rec.INFO['DP4'][-2:]))/sum(rec.INFO['DP4']) > agreement and float(rec.INFO['DP']) > cov_thresh :
 #																		#if it's a SNP and it's called by more than 75% of the reads, and there are 12+ reads covering.
 		#																		Sekelsky data are monoploid, so no heterozygosity worries.
-
 		#eff = open('%s.bed'%SNP_log, 'w')
 		#eff.write('%s\t%s\t%s\n'%tuple([rec.CHROM, int(rec.POS), int(rec.POS)+1]))
 		#eff.close()
@@ -47,7 +42,7 @@ for rec in parser:
 		#os.remove('%s.bed'%SNP_log)	#	cleanup
 		coverage = 0
 		reg_cov = 0
-		phial.write('%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n'%tuple([rec.CHROM, rec.POS, rec.REF, '%s'*len(rec.ALT)%tuple(rec.ALT), rec.INFO['DP'], rec.QUAL]))
+		phial.write('%s\t%s\t%s\t%s\t%s\t%s\t\n'%tuple([rec.CHROM, rec.POS, rec.REF, '%s'*len(rec.ALT)%tuple(rec.ALT), rec.INFO['DP'], rec.QUAL]))
 		#			Writes a flatfile of approved SNPs:	Chromome	Position	Reference	Alternate alleles	Coverage at-site 	Covereage +/- 1kb
 
 
