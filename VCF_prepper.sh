@@ -4,6 +4,7 @@
 #	$2 										#
 #	$3	the FASTQ files of sequences to align
 #	$4	job title							#
+#		THIS VERSION OPTIMIZED FOR RICH M.'S SUGARFLIES
 #############################################
 Load relevant modules 						#
 . /nas02/apps/Modules/default/init/bash		#

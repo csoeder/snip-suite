@@ -5,6 +5,8 @@ Given two lists of SNPs from SNP_call:
 
 """
 
+#		THIS VERSION OPTIMIZED FOR RICH M.'S SUGARFLIES
+
 
 import matplotlib 
 matplotlib.use('agg') 

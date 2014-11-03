@@ -1,9 +1,7 @@
 """
 Given a VCF file and the BAM file it was based upon, a flat file of SNPS and coverages is produced. 
 """
-
-
-#hurble burble
+#		THIS VERSION OPTIMIZED FOR RICH M.'S SUGARFLIES
 
 import vcf
 import sys
