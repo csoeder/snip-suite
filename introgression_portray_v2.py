@@ -68,11 +68,11 @@ def snp_grep(parent1, parent2, hybrid):
 	hybrid_snps={}#			SNPs which are present in the hybrid
 
 	def grep_coverage(chro, point):
-		f = open('test.bed', 'w')
+		f = open('%s.bed'%titleHyb, 'w')
 		f.write('%s\t%s\t%s\n'%tuple([chro, point, point+1]))
 		f.close()
-		site_cov = int(check_output(['bedtools', 'intersect', '-a', '%s/%scoverage.bedgraph'%tuple([titleHyb, titleHyb]), '-b', 'test.bed' ]).split('\t')[-1])
-		call(['rm', 'test.bed'])		
+		site_cov = int(check_output(['bedtools', 'intersect', '-a', '%s/%scoverage.bedgraph'%tuple([titleHyb, titleHyb]), '-b', '%s.bed'%titleHyb ]).split('\t')[-1])
+		call(['rm', '%s.bed'%titleHyb])		
 		return site_cov
 
 	with open(hybrid, 'rb') as csvfile:
