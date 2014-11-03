@@ -2,6 +2,9 @@
 Given a VCF file and the BAM file it was based upon, a flat file of SNPS and coverages is produced. 
 """
 
+
+#hurble burble
+
 import vcf
 import sys
 import os
