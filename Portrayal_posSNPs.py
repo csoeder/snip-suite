@@ -13,6 +13,7 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 from subprocess import call, check_output
+import pickle
 
 
 parent1_SNPS_file = sys.argv[1]
@@ -172,6 +173,7 @@ def write_to_bed(points, phial, colour, name):
 
 shared_SNPs, disjoint1_SNPs, disjoint2_SNPs = pool_snps(parent1_SNPS_file, parent2_SNPS_file)
 present1, present2, absent1, absent2, n00bs, hypervars = snp_grep(disjoint1_SNPs, disjoint2_SNPs, hybrid_SNPS_file)
+pickle.dump( [shared_SNPs, disjoint1_SNPs, disjoint2_SNPs, present1, present2, absent1, absent2, n00bs, hypervars], open('%s.pickle'%titleHyb, 'wb') )
 
 print "\t\tREPORT:\t%s\t\t"%chrom
 print "Between %s and %s, %s SNP variants were logged."%tuple([title1, title2, len(shared_SNPs)+len(disjoint1_SNPs)+len(disjoint2_SNPs)])
