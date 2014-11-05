@@ -71,7 +71,10 @@ def snp_grep(parent1, parent2, hybrid):
 		f = open('%s.bed'%titleHyb, 'w')
 		f.write('%s\t%s\t%s\n'%tuple([chro, point, point+1]))
 		f.close()
-		site_cov = int(check_output(['bedtools', 'intersect', '-a', '%s/%scoverage.bedgraph'%tuple([titleHyb, titleHyb]), '-b', '%s.bed'%titleHyb ]).split('\t')[-1])
+		try:
+			site_cov = int(check_output(['bedtools', 'intersect', '-a', '%s/%scoverage.bedgraph'%tuple([titleHyb, titleHyb]), '-b', '%s.bed'%titleHyb ]).split('\t')[-1])
+		except ValueError:
+			site_cov = 0
 		call(['rm', '%s.bed'%titleHyb])		
 		return site_cov
 
