@@ -164,7 +164,7 @@ def write_to_bed(points, phial, colour, name):
 	for point in points:
 		vial.write('%s\t%s\t%s\therpderp\t0\t+\t%s\t%s\t%s\n'%tuple([chrom, point, point+1, point, point+1, colour]))
 	vial.close()
-
+#
 
 
 shared_SNPs, disjoint1_SNPs, disjoint2_SNPs = pool_snps(parent1_SNPS_file, parent2_SNPS_file)
