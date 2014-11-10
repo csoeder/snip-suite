@@ -112,6 +112,8 @@ def snp_grep(parent1, parent2, hybrid):
 #			if grep_coverage(chrom, key) > missing_SNP_threshold:#	If we have sufficient coverage...
 #				parent2_absent.append(key)#	Declare it absent
 
+
+
 	for key in hybrid_snps.keys():	#	collect SNPs unique it the hybrid
 		if not (key in parent1.keys() or key in parent2.keys()):	#If the SNP is at a unique site...
 			new_snps[key] = hybrid_snps[key]
