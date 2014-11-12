@@ -28,10 +28,6 @@ titleHyb = sys.argv[6]
 
 
 
-
-###yesyes
-
-
 chroms=['2L','2R', '4']
 box_size=10**3
 missing_SNP_threshold = 10	#hybrid must have at least this coverage to declare that it is missing a parental SNP
@@ -54,7 +50,7 @@ def pool_snps(parent1, parent2):
 			if int(row[1]) in disjoint1[row[0]].keys() and disjoint1[row[0]][int(row[1])] == row[3]:#	If this site has a SNP in parent1
 #																					#	and the polymorphism is the same as parent1
 					shared[row[0]][int(row[1])] = disjoint1[row[0]].pop(int(row[1]))#				Then it's a shared SNP. Remove and toss it in the shared dict
-				else:
+			else:
 					disjoint2[row[0]][int(row[1])] = row[3]		#Else, toss it in with parent2
 	return shared, disjoint1, disjoint2
 
