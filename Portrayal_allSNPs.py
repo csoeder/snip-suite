@@ -29,7 +29,7 @@ titleHyb = sys.argv[6]
 ###yesyes
 
 
-chroms=["2L","2R","3L","3R","4","X"]
+chroms=["2L","2R","3L","3R","4","X", "YHet"]
 box_size=10**3
 missing_SNP_threshold = 10	#hybrid must have at least this coverage to declare that it is missing a parental SNP
 #Super awesome
