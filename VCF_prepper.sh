@@ -10,6 +10,7 @@ Load relevant modules 						#
 . /nas02/apps/Modules/default/init/bash		#
 module load bwa								#
 module load samtools						#
+module load vcftools
 #	Is the reference genome ready?			#
 ###	Align the reads! ########################################
 bwa aln -O 10 -E 3 -M 2 -o 2 -e 10 -n 5 $1 $2 > $4_1.sai	#	Parameters from PSISeq procedure
