@@ -5,7 +5,7 @@ Given two lists of SNPs from SNP_call:
 
 """
 
-#		THIS VERSION OPTIMIZED FOR RICH M.'S SUGARFLIES
+#		THIS VERSION OPTIMIZED FOR THE CROWN-SEKELSKY FLIES
 
 
 import matplotlib 
@@ -50,9 +50,9 @@ def pool_snps(parent1, parent2):
 		for row in spamreader:
 			if int(row[1]) in disjoint1[row[0]].keys() and disjoint1[row[0]][int(row[1])] == row[3]:#	If this site has a SNP in parent1
 #																					#	and the polymorphism is the same as parent1
-					shared[row[0]][int(row[1])] = disjoint1[row[0]].pop(int(row[1]))#				Then it's a shared SNP. Remove and toss it in the shared dict
-				else:
-					disjoint2[row[0]][int(row[1])] = row[3]		#Else, toss it in with parent2
+				shared[row[0]][int(row[1])] = disjoint1[row[0]].pop(int(row[1]))#				Then it's a shared SNP. Remove and toss it in the shared dict
+		else:
+			disjoint2[row[0]][int(row[1])] = row[3]		#Else, toss it in with parent2
 	return shared, disjoint1, disjoint2
 
 
