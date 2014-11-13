@@ -183,7 +183,7 @@ present1, present2, absent1, absent2, n00bs, hypervars = snp_grep(disjoint1_SNPs
 pickle.dump( [shared_SNPs, disjoint1_SNPs, disjoint2_SNPs, present1, present2, absent1, absent2, n00bs, hypervars], open('%s.pickle'%titleHyb, 'wb') )
 
 ###http://stackoverflow.com/questions/952914/making-a-flat-list-out-of-list-of-lists-in-python
-print "\t\tREPORT:\t%s\t\t"%chrom
+print "\t\tREPORT:\t\t\t"
 print "Between %s and %s, %s SNP variants were logged."%tuple([title1, title2, len( [item for sublist in shared_SNPs.values() for item in sublist] )+len( [item for sublist in disjoint1_SNPs.values() for item in sublist] )+len([item for sublist in disjoint2_SNPs.values() for item in sublist])])
 print "%s SNPs were identified unique to %s"%tuple([len([item for sublist in disjoint1_SNPs.values() for item in sublist]), title1])
 print "%s SNPs were identified unique to %s"%tuple([len([item for sublist in disjoint2_SNPs.values() for item in sublist]), title2])
