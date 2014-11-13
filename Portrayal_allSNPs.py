@@ -29,7 +29,7 @@ titleHyb = sys.argv[6]
 ###yesyes
 
 
-chroms=["2L","2R","3L","3R","4","X", "YHet"]
+chroms=["2L","2R","3L","3R","4","X", "YHet", "2RHet"]
 box_size=10**3
 missing_SNP_threshold = 10	#hybrid must have at least this coverage to declare that it is missing a parental SNP
 #Super awesome
@@ -94,12 +94,12 @@ def snp_grep(parent1, parent2, hybrid):
 				elif (key in parent2[chro].keys() and parent2[chro][key] == hybrid_snps[chro][key]):
 					#	If site is also variable in P2, and the variation matches, then the P2 SNP is here, and this site is not 'absent' 
 					parent2_present[chro].append(key)
-#				else:	#	If the site doesn't have a recognized SNP, that SNP has gone missing. Where is it???
-#					if grep_coverage(chrom, key) > missing_SNP_threshold:#	If we have sufficient coverage...
-#						parent1_absent.append(key)#		Declare this SNP absent
-#			else:	#	if the key is not listed as a hybrid SNP, the site is missing! Where is it?
-#				if grep_coverage(chrom, key) > missing_SNP_threshold:#	If we have sufficient coverage...
-#					parent1_absent.append(key)#		Declare this SNP absent
+				else:	#	If the site doesn't have a recognized SNP, that SNP has gone missing. Where is it???
+					if grep_coverage(chrom, key) > missing_SNP_threshold:#	If we have sufficient coverage...
+						parent1_absent.append(key)#		Declare this SNP absent
+			else:	#	if the key is not listed as a hybrid SNP, the site is missing! Where is it?
+				if grep_coverage(chrom, key) > missing_SNP_threshold:#	If we have sufficient coverage...
+					parent1_absent.append(key)#		Declare this SNP absent
 	for chro in chroms:
 		for key in parent2[chro].keys():	#		For each SNP site in P1...
 			if key in hybrid_snps[chro].keys():		#	if the site is variable in Hybrid...
@@ -108,12 +108,12 @@ def snp_grep(parent1, parent2, hybrid):
 				elif (key in parent1[chro].keys() and parent1[chro][key] == hybrid_snps[chro][key]):
 					#	If site is also variable in P2, and the variation matches, then the P2 SNP is here, and this site is not 'absent' 
 					parent1_present[chrom].append(key)
-#				else:	#	If the site doesn't have a recognized SNP, that SNP has gone missing. Where is it???
-#					if grep_coverage(chrom, key) > missing_SNP_threshold:#	If we have sufficient coverage...
-#						parent2_absent.append(key)#		Declare it absent
-#			else:	#	if the key is not listed as a hybrid SNP, the site is definitely missing!
-#				if grep_coverage(chrom, key) > missing_SNP_threshold:#	If we have sufficient coverage...
-#					parent2_absent.append(key)#	Declare it absent
+				else:	#	If the site doesn't have a recognized SNP, that SNP has gone missing. Where is it???
+					if grep_coverage(chrom, key) > missing_SNP_threshold:#	If we have sufficient coverage...
+						parent2_absent.append(key)#		Declare it absent
+			else:	#	if the key is not listed as a hybrid SNP, the site is definitely missing!
+				if grep_coverage(chrom, key) > missing_SNP_threshold:#	If we have sufficient coverage...
+					parent2_absent.append(key)#	Declare it absent
 	for chro in chroms:
 		for key in hybrid_snps[chro].keys():	#	collect SNPs unique it the hybrid
 			if not (key in parent1[chro].keys() or key in parent2[chro].keys()):	#If the SNP is at a unique site...
