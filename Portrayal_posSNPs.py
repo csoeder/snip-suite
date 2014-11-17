@@ -24,7 +24,7 @@ parent2_SNPS_file = sys.argv[3]
 title2 = sys.argv[4]
 hybrid_SNPS_file = sys.argv[5]
 titleHyb = sys.argv[6]
-
+hybrid_Align=sys.argv[7]	#sorted BAM file of hybrid alignment
 
 ###yesyes
 
@@ -83,7 +83,24 @@ def pool_snps(parent1, parent2):
 	return shared, disjoint1, disjoint2
 
 
-def snp_grep(parent1, parent2, hybrid):
+def cov_grep(snp_list, bam_file):
+	phial=open('%s_sites.bed'%titleHyb, 'w')
+	for chro in chroms:
+		for site in snp_list[chro]:
+			phial.write('%s\t%s\t%s\n'%tuple([chro, site, site+1]))
+	phial.close()
+	call('bedtools coverage -abam %s -b %s_sites.bed > %s.cov'%tuple([hybrid_Align, titleHyb, titleHyb]), shell=True)
+	coverage=dict.fromkeys(chroms,{})
+	with open('%s.cov'%titleHyb, 'rb') as csvfile:
+		spamreader=csv.reader(csvfile, delimiter='\t')
+		for row in spamreader:
+			coverage[row[0]][row[1]]=int(row[3])
+	return coverage
+
+
+
+
+def snp_grep(parent1, parent2, hybrid, hyb_cov):
 	"""
 	Given the two dicts of disjoint parental SNPs, load the hybrid .SNPS file, and 
 	look at each SNP site in the two dicts. Classify each as present or absent 
@@ -101,9 +118,14 @@ def snp_grep(parent1, parent2, hybrid):
 			except KeyError:
 				pass
 
+
+
 	parent1_present = dict.fromkeys(chroms,[])	#	SNPs from p1 which are present
-	parent2_present = dict.fromkeys(chroms,[])#	SNPs from p2 which are present
+	parent2_present = dict.fromkeys(chroms,[])	#	SNPs from p2 which are present
 	#parents 1 and 2 absent pending coverage grepping
+	parent1_absent = dict.fromkeys(chroms,[])	#	SNPs from p1 which are present
+	parent2_absent = dict.fromkeys(chroms,[])	#	SNPs from p2 which are present
+
 	gnu_vars = dict.fromkeys(chroms,[])
 
 	for chro in chroms:
@@ -125,6 +147,8 @@ def snp_grep(parent1, parent2, hybrid):
 				gnu_vars[chro].append(int(site))
 
 	return parent1_present, parent2_present, gnu_vars #parent1_absent, parent2_absent, new_snps, hypervars
+
+
 
 
 def archimedes(points):
