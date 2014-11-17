@@ -29,7 +29,7 @@ titleHyb = sys.argv[6]
 ###yesyes
 
 
-chroms=["2L","2R","3L","3R","4","X", "YHet", "2RHet"]
+#chroms=["2L","2R","3L","3R","4","X", "YHet", "2RHet"]
 box_size=10**3
 missing_SNP_threshold = 10	#hybrid must have at least this coverage to declare that it is missing a parental SNP
 #Super awesome
@@ -172,7 +172,7 @@ def write_to_bed(points, phial, colour, name):
 	vial.write('track name="%s" description="%s" visibility=1 itemRgb="On"\n'%tuple([name,name]))
 	for chro in points.keys():
 		for site in points[chro]:
-			vial.write('%s\t%s\t%s\therpderp\t0\t+\t%s\t%s\t%s\n'%tuple([chro, point, point+1, point, point+1, colour]))
+			vial.write('%s\t%s\t%s\therpderp\t0\t+\t%s\t%s\t%s\n'%tuple([chro, site, site+1, site, site+1, colour]))
 	vial.close()
 
 
