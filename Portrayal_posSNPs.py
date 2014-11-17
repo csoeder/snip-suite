@@ -70,7 +70,7 @@ def pool_snps(parent1, parent2):
 
 		for i in inter:						#for each shared site...
 			if p1[chro][i] != p2[chro][i]:	#if the phenotype at the site is actually different...
-				inter.pop(index(i))			#remove it from the shared SNPS
+				inter.pop(inter.index(i))			#remove it from the shared SNPS
 				disjoint1.append(i)			#insert each site 
 				disjoint2.append(i)			#				in the appropriate list
 		for j in disj1:						#
