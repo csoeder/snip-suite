@@ -100,7 +100,7 @@ def cov_grep(snp_list, bam_file):
 
 
 
-def snp_grep(parent1, parent2, hybrid, hyb_cov):
+def snp_grep(parent1, parent2, hybrid):
 	"""
 	Given the two dicts of disjoint parental SNPs, load the hybrid .SNPS file, and 
 	look at each SNP site in the two dicts. Classify each as present or absent 
