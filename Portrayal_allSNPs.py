@@ -122,7 +122,7 @@ def snp_grep(parent1, parent2, hybrid, hyb_cov):
 			except KeyError:
 				pass
 	print "begin coverage grep"
-	coverage = cov_grep(parent_snps, hybrid_Align)
+	coverage = cov_grep(parent_snps, hyb_cov)
 	print "done grepping "
 
 
@@ -209,7 +209,7 @@ def write_to_bed(points, phial, colour, name):
 
 
 shared_SNPs, disjoint1_SNPs, disjoint2_SNPs = pool_snps(parent1_SNPS_file, parent2_SNPS_file)
-present1, present2, n00bs, absent1, absent2= snp_grep(disjoint1_SNPs, disjoint2_SNPs, hybrid_SNPS_file)
+present1, present2, n00bs, absent1, absent2= snp_grep(disjoint1_SNPs, disjoint2_SNPs, hybrid_SNPS_file, hybrid_Align)
 
 pickle.dump( [shared_SNPs, disjoint1_SNPs, disjoint2_SNPs, present1, present2, n00bs, absent1, absent2], open('%s.pickle'%titleHyb, 'wb') )
 
