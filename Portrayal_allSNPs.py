@@ -247,8 +247,8 @@ print "\t\t~~~END REPORT~~~\t\t"
 
 write_to_bed(present1, '%s_SNPs_present_in_%s.bed'%tuple([title1, titleHyb]), '255,0,0', '%s SNPs in %s'%tuple([title1, titleHyb]))
 write_to_bed(present2, '%s_SNPs_present_in_%s.bed'%tuple([title2, titleHyb]), '0,0,255', '%s SNPs in %s'%tuple([title2, titleHyb]))
-write_to_bed(absent1, '%s_SNPs_absent_in_%s.bed'%tuple([title1, titleHyb]), '255,0,255', '%s SNPs missing from %s'%tuple([title1, titleHyb]))
-write_to_bed(absent2, '%s_SNPs_absent_in_%s.bed'%tuple([title2, titleHyb]), '0,255,0', '%s SNPs missing from %s'%tuple([title2, titleHyb]))
+write_to_bed(absent1, '%s_SNPs_absent_in_%s.bed'%tuple([title1, titleHyb]), '0,255,0', '%s SNPs missing from %s'%tuple([title1, titleHyb]))
+write_to_bed(absent2, '%s_SNPs_absent_in_%s.bed'%tuple([title2, titleHyb]), '255,153,51', '%s SNPs missing from %s'%tuple([title2, titleHyb]))
 
 #coord, dens = archimedes(disjoint1_SNPs.keys())
 #write_to_varwig(coord, dens, '%s_disjoint.wig'%title1, '255,0,0', '%s disjoint SNP density'%title1)
