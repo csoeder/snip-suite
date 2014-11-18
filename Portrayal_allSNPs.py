@@ -29,8 +29,8 @@ hybrid_Align=sys.argv[7]	#sorted BAM file of hybrid alignment
 ###yesyes
 
 
-chroms=["2L","2R","3L","3R","4","X", "YHet", "2RHet"]
-#chroms=["2L"]
+#chroms=["2L","2R","3L","3R","4","X", "YHet", "2RHet"]
+chroms=["2L"]
 box_size=10**3
 missing_SNP_threshold = 10	#hybrid must have at least this coverage to declare that it is missing a parental SNP
 #Super awesome
@@ -100,7 +100,7 @@ def cov_grep(snp_list, bam_file):
 
 
 
-def snp_grep(parent1, parent2, hybrid):
+def snp_grep(parent1, parent2, hybrid, hyb_cov):
 	"""
 	Given the two dicts of disjoint parental SNPs, load the hybrid .SNPS file, and 
 	look at each SNP site in the two dicts. Classify each as present or absent 
@@ -108,6 +108,10 @@ def snp_grep(parent1, parent2, hybrid):
 	"""
 
 	hybrid_snps=dict.fromkeys(chroms,{})
+	parent_snps=dict.fromkeys(chroms, [])
+	for chro in chroms:
+		parent_snps[chro].extend(parent1[chro])
+		parent_snps[chro].extend(parent2[chro])
 
 	with open(hybrid, 'rb') as csvfile:
 		spamreader = csv.reader(csvfile, delimiter='\t')
@@ -118,7 +122,7 @@ def snp_grep(parent1, parent2, hybrid):
 			except KeyError:
 				pass
 	print "begin coverage grep"
-	coverage = cov_grep(hybrid_snps, hybrid_Align)
+	coverage = cov_grep(parent_snps, hybrid_Align)
 	print "done grepping "
 
 
