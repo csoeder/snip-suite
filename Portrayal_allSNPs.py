@@ -94,7 +94,7 @@ def cov_grep(snp_list, bam_file):
 	with open('%s.cov'%titleHyb, 'rb') as csvfile:
 		spamreader=csv.reader(csvfile, delimiter='\t')
 		for row in spamreader:
-			coverage[row[0]][row[1]]=int(row[3])
+			coverage[row[0]][int(row[1])]=int(row[3])
 	return coverage
 
 
@@ -152,6 +152,8 @@ def snp_grep(parent1, parent2, hybrid, hyb_cov):
 					parent2_present[chro].append(int(site))
 			else:
 				gnu_vars[chro].append(int(site))
+
+
 		for site in parent1[chro].keys():
 			if site not in parent1_present[chro] or gnu_vars[chro]:
 				if coverage[chro][site] >= missing_SNP_threshold:
