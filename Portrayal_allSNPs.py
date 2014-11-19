@@ -155,11 +155,11 @@ def snp_grep(parent1, parent2, hybrid, hyb_cov):
 
 
 		for site in parent1[chro].keys():
-			if site not in parent1_present[chro] or site not in parent2_present[chro] or site not in gnu_vars[chro]:#make sure the site isn't recorded ANYwhere....
+			if site not in parent1_present[chro] and site not in parent2_present[chro] and site not in gnu_vars[chro]:#make sure the site isn't recorded ANYwhere....
 				if coverage[chro][site] >= missing_SNP_threshold:
 					parent1_absent[chro].append(int(site))
 		for site in parent2[chro].keys():
-			if site not in parent1_present[chro] or site not in parent2_present[chro] or site not in gnu_vars[chro]:
+			if site not in parent1_present[chro] and site not in parent2_present[chro] and site not in gnu_vars[chro]:
 				if coverage[chro][site] >= missing_SNP_threshold:
 					parent2_absent[chro].append(int(site))
 
