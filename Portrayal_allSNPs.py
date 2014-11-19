@@ -138,17 +138,17 @@ def snp_grep(parent1, parent2, hybrid, hyb_cov):
 	for chro in chroms:
 		for site in hybrid_snps[chro].keys():
 			if site in set(parent1[chro].keys()).intersection(set(parent2[chro].keys())):
-				if hybrid_snps[chro][site] == parent1[chro][site]:
+				if hybrid_snps[chro][site] in parent1[chro][site]:
 					parent1_present[chro].append(int(site))
-				elif hybrid_snps[chro][site] == parent2[chro][site]:
+				elif hybrid_snps[chro][site] in parent2[chro][site]:
 					parent2_present[chro].append(int(site))
 				else:#Record this as an additional SNP
 					gnu_vars[chro].append(int(site))
 			elif site in parent1[chro].keys():
-				if hybrid_snps[chro][site] == parent1[chro][site]:
+				if hybrid_snps[chro][site] in parent1[chro][site]:
 					parent1_present[chro].append(int(site))
 			elif site in parent2[chro].keys():
-				if hybrid_snps[chro][site] == parent2[chro][site]:
+				if hybrid_snps[chro][site] in parent2[chro][site]:
 					parent2_present[chro].append(int(site))
 			else:
 				gnu_vars[chro].append(int(site))
