@@ -201,8 +201,8 @@ def write_to_varwig(coords, density, phial, colour, name):
 
 def write_to_bed(points, phial, colour, name):
 	vial = open(phial, 'w')
-	vial.write('browser hide all')
-	vial.write('track name="%s" description="%s" visibility=1 itemRgb="On"\n'%tuple([name,name]))
+	#vial.write('browser hide all')
+	#vial.write('track name="%s" description="%s" visibility=1 itemRgb="On"\n'%tuple([name,name]))
 	for chro in points.keys():
 		for site in points[chro]:
 			vial.write('%s\t%s\t%s\therpderp\t0\t+\t%s\t%s\t%s\n'%tuple([chro, site, site+1, site, site+1, colour]))
