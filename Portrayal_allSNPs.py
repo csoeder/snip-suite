@@ -29,7 +29,7 @@ hybrid_Align=sys.argv[7]	#sorted BAM file of hybrid alignment
 ###yesyes
 
 
-chroms=["2L","2R","3L","3R","4","X", "YHet", "2RHet"]
+chroms=["2L","2R"]#,"3L","3R","4","X", "YHet", "2RHet"]
 #chroms=["2L"]
 box_size=10**3
 missing_SNP_threshold = 10	#hybrid must have at least this coverage to declare that it is missing a parental SNP
