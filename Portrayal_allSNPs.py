@@ -38,26 +38,21 @@ missing_SNP_threshold = 10	#hybrid must have at least this coverage to declare t
 def pool_snps(parent1, parent2):
 	""" given two .SNPS files, this loads them into python dict objects, then outputs
 	which SNPs are disjoint and which are shared """
-	p1=dict.fromkeys(chroms,{})
-	p2=dict.fromkeys(chroms,{})
 
-	with open(parent1, 'rb') as csvfile:
-		spamreader = csv.reader(csvfile, delimiter='\t')
-		for row in spamreader:
-			try:
-				p1[row[0]][int(row[1])] = row[3]###		Collect all the SNPs from parent 1;
-					###										load them into the parent1 dict in the form {CHR:{POSITION:ALT_ALLELE}}
-			except KeyError:	#	if the chromosome isn't in chroms
-				pass
+	def parent_pull(source, sink):#								Pull parental SNPs
+		with open(source, 'rb') as csvfile:
+			spamreader = csv.reader(csvfile, delimiter='\t')
+			for row in spamreader:
+				try:
+					sink[row[0]][int(row[1])] = row[3]###		Collect all the SNPs from parent 1;
+						###										load them into the parent1 dict in the form {CHR:{POSITION:ALT_ALLELE}}
+				except KeyError:	#	if the chromosome isn't in chroms
+					pass		
+		return sink
 
-	with open(parent2, 'rb') as csvfile:
-		spamreader = csv.reader(csvfile, delimiter='\t')
-		for row in spamreader:
-			try:
-				p2[row[0]][int(row[1])] = row[3]###		Collect all the SNPs from parent 1;
-					###										load them into the parent1 dict in the form {CHR:{POSITION:ALT_ALLELE}}
-			except KeyError:	#	if the chromosome isn't in chroms
-				pass
+	p1 = parent_pull(parent1, dict.fromkeys(chroms,{}))
+	p2 = parent_pull(parent2, dict.fromkeys(chroms,{}))
+
 
 	shared = dict.fromkeys(chroms,{})		#shared SNPs go here
 	disjoint1 = dict.fromkeys(chroms,{})	#those only in parent1
@@ -187,7 +182,6 @@ def archimedes(points):
 		#print dens
 		start += box_size
 	return coord, density
-
 
 def write_to_varwig(coords, density, phial, colour, name):
         vial = open(phial, 'w')
