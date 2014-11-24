@@ -5,7 +5,7 @@
 #	$3	job title							#
 #		THIS VERSION OPTIMIZED FOR RICH M.'S SUGARFLIES
 #############################################
-Load relevant modules 						#
+#Load relevant modules 						#
 . /nas02/apps/Modules/default/init/bash		#
 module load bwa								#
 module load samtools						#
