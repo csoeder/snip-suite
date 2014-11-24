@@ -26,6 +26,7 @@ done
 
 echo track name=$title_hyb description=$title_hyb itemRgb="On" > $title_hyb.pre
 
-cat *in_$title_hyb* >> $title_hyb.pre
+sed -e 's/^/chr/' *in_$title_hyb* >> $title_hyb.pre
 sort -k 1,1 -k2,2n $title_hyb.pre > $title_hyb.bed
 rm $title_hyb.pre
+rm *in_$title_hyb*
