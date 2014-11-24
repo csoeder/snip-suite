@@ -20,7 +20,7 @@ declare -a somes=("2L","2R","3L","3R","4","X","YHet","2RHet")
 
 for chrom in "${somes[@]}"; 
 
-	do python Portrayall_allSNPs.py $1 title_1 $2 title_2 $3 title_hyb $4 $chrom; 
+	do python snip-suite/Portrayal_allSNPs.py $1 title_1 $2 title_2 $3 title_hyb $4 $chrom; 
 	
 done
 
