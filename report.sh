@@ -20,13 +20,14 @@ declare -a somes=("2L","2R","3L","3R","4","X","YHet","2RHet")
 
 for chrom in "${somes[@]}"; 
 
-	do python snip-suite/Portrayal_allSNPs.py $1 $title_1 $2 $title_2 $3 $title_hyb $4 $chrom; 
+	do echo $chrom;
+	python snip-suite/Portrayal_allSNPs.py $1 $title_1 $2 $title_2 $3 $title_hyb $4 $chrom; 
 	
 done
 
-echo track name=$title_hyb description=$title_hyb itemRgb="On" > $title_hyb.pre
+echo track name=$title_hyb description=$title_hyb itemRgb="On" > $title_hyb.bed
 
 sed -e 's/^/chr/' *in_$title_hyb* >> $title_hyb.pre
-sort -k 1,1 -k2,2n $title_hyb.pre > $title_hyb.bed
+sort -k 1,1 -k2,2n $title_hyb.pre >> $title_hyb.bed
 rm $title_hyb.pre
 rm *in_$title_hyb*
