@@ -15,7 +15,7 @@ title_1=$(echo $1 | cut -f 1 -d . | rev | cut -f 1 -d / | rev)
 title_2=$(echo $2 | cut -f 1 -d . | rev | cut -f 1 -d / | rev)
 title_hyb=$(echo $3 | cut -f 1 -d . | rev | cut -f 1 -d / | rev)
 
-declare -a somes=("2L","2R","3L","3R","4","X","YHet","2RHet")
+declare -a somes=("2L" "2R" "3L" "3R" "4" "X" "YHet" "2RHet")
 
 
 for chrom in "${somes[@]}"; 
