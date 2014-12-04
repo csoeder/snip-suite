@@ -15,8 +15,7 @@ from random import randint as rn
 
 parent1 = sys.argv[1]
 parent2 = sys.argv[2]
-bedmask = sys.argv[3]
-fileout = sys.argv[4]
+fileout = sys.argv[3]
 
 windowsize=10**4	# shuffle a 10kb window
 L2=23011544	#Size of the 2L chromosome
