@@ -33,7 +33,7 @@ call('bedtools intersect -v -abam %s -b bedmask.bed | samtools view - >> %s.sam 
 print "assembled"
 call('samtools view -Shb %s.sam > %s.bam'%tuple([fileout, fileout]), shell=True)
 print "converted"
-call('samtools sort -f %s.bam %s.sort.bam'%tuple([fileout, fileout]), shell=True)
+call('samtools sort %s.bam %s.sort'%tuple([fileout, fileout]), shell=True)
 print "sorted"
 call('rm %s.sam'%fileout)
 call('rm %s.bam'%fileout)
