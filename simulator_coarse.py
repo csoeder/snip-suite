@@ -24,8 +24,11 @@ breakpoint = rn(1, L2)
 
 call('samtools view -h %s 2L:1-%s > %s.sam'%tuple([parent1, breakpoint, fileout]), shell=True)
 call('samtools view %s 2L:%s-%s >> %s.sam'%tuple([parent2, L2, breakpoint, fileout]), shell=True)
+print "print assembled"
 call('samtools view -Shb %s.sam > %s.bam'%tuple([fileout, fileout]), shell=True)
+print "converted"
 call('samtools sort -f %s.bam %s.sort.bam'%tuple([fileout, fileout]), shell=True)
+print "sorted"
 call('rm %s.sam'%fileout)
 call('rm %s.bam'%fileout)
 
