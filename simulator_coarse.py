@@ -22,8 +22,8 @@ L2=23011544	#Size of the 2L chromosome
 
 breakpoint = rn(1, L2)
 
-call('samtools view -h %s chr2L:1-%s > %s.sam'%tuple([parent1, breakpoint, fileout]), shell=True)
-call('samtools view %s chr2L:%s-%s >> %s.sam'%tuple([parent2, L2, breakpoint, fileout]), shell=True)
+call('samtools view -h %s 2L:1-%s > %s.sam'%tuple([parent1, breakpoint, fileout]), shell=True)
+call('samtools view %s 2L:%s-%s >> %s.sam'%tuple([parent2, L2, breakpoint, fileout]), shell=True)
 call('samtools view -Shb %s.sam > %s.bam'%tuple([fileout, fileout]), shell=True)
 call('samtools sort -f %s.bam %s.sort.bam'%tuple([fileout, fileout]), shell=True)
 call('rm %s.sam'%fileout)
