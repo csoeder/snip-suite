@@ -25,7 +25,7 @@ phial = open('bedmask.bed', 'w')
 
 for i in range(0, numwins):
 	start = rn(1, L2-windowsize-1)
-	phial.write('chr2L\t%s\t%s\n'%tuple([start, start+windowsize]))
+	phial.write('2L\t%s\t%s\n'%tuple([start, start+windowsize]))
 phial.close()
 
 call('bedtools intersect -abam %s -b bedmask.bed | samtools view -h - > %s.sam '%tuple([parent1, fileout]), shell=True)
