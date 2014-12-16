@@ -44,7 +44,7 @@ def histogrammatical(input_SNPs, name, color ):
 			start += 100
 
 		num, bins, patches = plt.hist(snp_rho[chro], bins=25, histtype='step', color=color)
-		mux = max(mux, max(b))
+		mux = max(mux, max(bins))
 
 	plt.plot([],[], color, label=name)
 	return mux
