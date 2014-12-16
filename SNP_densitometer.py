@@ -46,7 +46,7 @@ def histogrammatical(input_SNPs, name, color ):
 		num, bins, patches = plt.hist(snp_rho[chro], bins=100, histtype='step', color=color)
 		mux = max(mux, max(num))
 		tot = float(sum(num))
-		adequate = sum(num[bins>critical_thresh])
+		adequate = sum(num[np.diff(bins)>critical_thresh])
 		print "%s:	%.2f\%	adequate;	%.2f\%	sparse\n"%tuple([chro, 100*adequate/tot, 100-100*adequate/tot])
 
 
