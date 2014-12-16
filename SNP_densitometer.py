@@ -57,7 +57,7 @@ m2 = histogrammatical(Parent2, Parent2.split('/')[-1].split('.SNPS')[0], 'r')
 plt.vlines(critical_thresh, 0, max(m1,m2), 'k', label='threshold')
 plt.legend()
 plt.show()
-plt.savefig('Parental SNP Densities')
+plt.savefig('Parental_SNP_Densities.png')
 
 
 
