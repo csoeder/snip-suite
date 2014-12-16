@@ -15,10 +15,6 @@ ref_dict = sys.argv[3]
 window_size = 10**3	#looking at a kbp window at a time
 critical_thresh = 4	#we want 
 
-chrom_lens = {}
-for record in SeqIO.parse(ref_dict, "fasta"):
-	if record.id in snp_dict.keys():
-		chrom_lens[record.id] = len(record)
 
 def histogrammatical(input_SNPs, name, color ):
 
@@ -30,6 +26,12 @@ def histogrammatical(input_SNPs, name, color ):
 				snp_dict[row[0]].append(int(row[1]))
 			else:
 				snp_dict[row[0]] = [int(row[1])]
+
+	chrom_lens = {}
+	for record in SeqIO.parse(ref_dict, "fasta"):
+		if record.id in snp_dict.keys():
+			chrom_lens[record.id] = len(record)
+
 
 	snp_rho = {}
 	mux = 0
