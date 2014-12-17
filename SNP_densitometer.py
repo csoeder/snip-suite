@@ -35,6 +35,7 @@ def histogrammatical(input_SNPs, name, color ):
 
 	snp_rho = {}
 	mux = 0
+	print name
 	for chro in snp_dict.keys():
 		snp_rho[chro] = []
 		start = 0
@@ -43,7 +44,7 @@ def histogrammatical(input_SNPs, name, color ):
 			snp_rho[chro].append(len(snps[snps>start][snps[snps>start]<start+window_size]))
 			start += 100
 
-		num, bins, patches = plt.hist(snp_rho[chro], bins=100, histtype='step', color=color)
+		num, bins, patches = plt.hist(snp_rho[chro], bins=49, histtype='step', color=color)
 		mux = max(mux, max(num))
 		tot = float(sum(num))
 		adequate = float(sum(num[bins[:-1]+0.5*np.diff(bins)>critical_thresh]))
@@ -55,6 +56,7 @@ def histogrammatical(input_SNPs, name, color ):
 
 
 	plt.plot([],[], color, label=name)
+	print
 	return mux
 
 
@@ -64,6 +66,9 @@ m2 = histogrammatical(Parent2, Parent2.split('/')[-1].split('.SNPS')[0], 'r')
 
 plt.vlines(critical_thresh, 0, max(m1,m2), 'k', label='threshold')
 plt.legend()
+plt.title('Diagnostic SNPs per %0.1e Base Pair Window'%tuple([window_size]))
+plt.xlabel('# SNPs per Window')
+plt.ylabel('# Windows')
 plt.show()
 plt.savefig('Parental_SNP_Densities.png')
 
