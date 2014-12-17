@@ -64,7 +64,7 @@ m1 = histogrammatical(Parent1, Parent1.split('/')[-1].split('.SNPS')[0], 'b')
 m2 = histogrammatical(Parent2, Parent2.split('/')[-1].split('.SNPS')[0], 'r')
 
 
-plt.vlines(critical_thresh, 0, max(m1,m2), 'k', label='threshold')
+plt.vlines(critical_thresh, 0, max(m1,m2)/2, 'k', label='threshold')
 plt.legend()
 plt.title('Diagnostic SNPs per %0.1e Base Pair Window'%tuple([window_size]))
 plt.xlabel('# SNPs per Window')
