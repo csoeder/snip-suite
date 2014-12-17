@@ -46,7 +46,7 @@ def histogrammatical(input_SNPs, name, color ):
 		num, bins, patches = plt.hist(snp_rho[chro], bins=100, histtype='step', color=color)
 		mux = max(mux, max(num))
 		tot = float(sum(num))
-		adequate = float(sum(num[np.diff(bins)>critical_thresh]))
+		adequate = float(sum(num[bins[:-1]+0.5*np.diff(bins)>critical_thresh]))
 #		print adequate
 #		print len(num), num
 #		print len(np.diff(bins)), np.diff(bins)
