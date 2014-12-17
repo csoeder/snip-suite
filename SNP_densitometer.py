@@ -43,14 +43,16 @@ def histogrammatical(input_SNPs, name, color ):
 			snp_rho[chro].append(len(snps[snps>start][snps[snps>start]<start+window_size]))
 			start += 100
 
-		num, bins, patches = plt.hist(snp_rho[chro], bins=50, histtype='step', color=color)
+		num, bins, patches = plt.hist(snp_rho[chro], bins=100, histtype='step', color=color)
 		mux = max(mux, max(num))
 		tot = float(sum(num))
-		adequate = sum(num[np.diff(bins)>critical_thresh])
-#		print len(num), num
-#		print len(np.diff(bins)), np.diff(bins)
-#		print chro, adequate
-		print "%s:	%.2f\%	adequate;	%.2f\%	sparse\n"%tuple([chro, 100*adequate/tot, 100-100*adequate/tot])
+		adequate = float(sum(num[np.diff(bins)>critical_thresh]))
+		print adequate
+		print len(num), num
+		print len(np.diff(bins)), np.diff(bins)
+		print chro, adequate
+#		print "%s:	%.2f\%	adequate;	%.2f\%	
+#sparse\n"%tuple([chro, 100*adequate/tot, 100-100*adequate/tot])
 
 
 	plt.plot([],[], color, label=name)
