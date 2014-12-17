@@ -47,12 +47,11 @@ def histogrammatical(input_SNPs, name, color ):
 		mux = max(mux, max(num))
 		tot = float(sum(num))
 		adequate = float(sum(num[np.diff(bins)>critical_thresh]))
-		print adequate
-		print len(num), num
-		print len(np.diff(bins)), np.diff(bins)
-		print chro, adequate
-#		print "%s:	%.2f\%	adequate;	%.2f\%	
-#sparse\n"%tuple([chro, 100*adequate/tot, 100-100*adequate/tot])
+#		print adequate
+#		print len(num), num
+#		print len(np.diff(bins)), np.diff(bins)
+#		print chro, adequate
+		print "%s:	%.2f%%	adequate;	%.2f%s% sparse\n"%tuple([chro, 100*adequate/tot, 100-100*adequate/tot])
 
 
 	plt.plot([],[], color, label=name)
