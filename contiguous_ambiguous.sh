@@ -6,13 +6,10 @@ CLEAN_BED=$2
 
 
 vcftools --vcf $VCF_IN --remove-indels --non-ref-af 0.25 --max-non-ref-af 0.75 --recode --stdout | vcf2bed > ambig.bed
+sed -i -e 's/^/chr/' ambig.bed
 
 BED_LEN=$(wc -l $CLEAN_BED | cut -f 1 -d ' ');
-
 BOOKMARK=1;
-
-echo $BED_LEN;
-echo $BOOKMARK
 
 while [[ $BOOKMARK -lt $BED_LEN ]]
 do
