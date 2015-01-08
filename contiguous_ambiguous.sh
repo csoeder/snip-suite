@@ -25,7 +25,7 @@ do
                 then
                         start=$(echo $line1 | tr ' ' '\t'| cut -f 2 );
                         stop=$(echo $line2 | tr ' ' '\t'| cut -f 2);
-                        echo  "$chr1\t$start\t$stop" >> bridged.bed;
+                        echo -e "$chr1\t$start\t$stop" >> bridged.bed;
                         ((BOOKMARK = BOOKMARK + 1));
                 else
                         ((BOOKMARK = BOOKMARK + 1));
