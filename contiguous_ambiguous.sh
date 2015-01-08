@@ -7,9 +7,12 @@ CLEAN_BED=$2
 
 vcftools --vcf $VCF_IN --remove-indels --non-ref-af 0.25 --max-non-ref-af 0.75 --recode --stdout | vcf2bed > ambig.bed
 
-BED_LEN=$(wc -l $CLEAN_BED | cut -f 8 -d ' ')
+BED_LEN=$(wc -l $CLEAN_BED | cut -f 1 -d ' ');
 
-BOOKMARK=1
+BOOKMARK=1;
+
+echo $BED_LEN;
+echo $BOOKMARK
 
 while [[ $BOOKMARK -lt $BED_LEN ]]
 do
@@ -30,8 +33,8 @@ do
 done
 
 bedtools intersect -v -a bridged.bed -b $CLEAN_BED | bedtools intersect -a ambig.bed -b - > contiguous_middlers.bed
-rm bridged.bed
-rm ambig.bed
+#rm bridged.bed
+#rm ambig.bed
 
 
 
