@@ -17,8 +17,7 @@ bwa aln -O 10 -E 3 -M 2 -o 2 -e 10 -n 5 $1 $2 > $4_1.sai	#	Parameters from PSISe
 bwa aln -O 10 -E 3 -M 2 -o 2 -e 10 -n 5 $1 $3 > $4_2.sai	#
 bwa sampe $1 $4_1.sai $4_2.sai $2 $3 > $4.sam 			#
 ###	Cleanup the alignment	#################################
-samtools view -bS $4.sam > $4.bam							#
-samtools sort $4.bam $4.sort								#
+samtools view -bS $4.sam | samtools sort - $4.sort								#
 samtools index $4.sort.bam									#
 ###	Generate the VCF ########################################
 samtools mpileup -uf $1 $4.sort.bam | bcftools view -bvcg - > $4.bcf
