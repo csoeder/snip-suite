@@ -20,8 +20,7 @@ bwa sampe $1 $4_1.sai $4_2.sai $2 $3 > $4.sam 			#
 samtools view -bS $4.sam | samtools sort - $4.sort								#
 samtools index $4.sort.bam									#
 ###	Generate the VCF ########################################
-samtools mpileup -uf $1 $4.sort.bam | bcftools view -bvcg - > $4.bcf
-bcftools view $4.bcf | vcfutils.pl varFilter -D100 > $4.vcf #	http://samtools.sourceforge.net/mpileup.shtml
+samtools mpileup -uf $1 $4.sort.bam | bcftools view -bvcg - | bcftools view - | vcfutils.pl varFilter -D100 > $4.vcf #	http://samtools.sourceforge.net/mpileup.shtml
 ###	Generate the .SNPS file #################################
 #python SNP_call.py $4.vcf $4.sort.bam $4.SNPS				#
 #############################################################
