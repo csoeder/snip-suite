@@ -1,8 +1,8 @@
 #!/bin/sh
 echo "Start the comparison!"
-parent1=PARC1_GSNAP
-parent2=PARG_GSNAP
-hybrid=REC3_GSNAP
+parent1=$1
+parent2=$2
+hybrid=$3
 
 echo "	Filtering the variant sites...	"
 vcftools --vcf "$parent1".vcf --stdout --remove-indels --non-ref-af 0.95 --minDP 10 --recode | vcf2bed > "$parent1".filtered.bed  
