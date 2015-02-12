@@ -46,7 +46,7 @@ len=$(wc -l "$parent1"_unique_in_"$hybrid".bed | cut -f 1 -d ' ')
 echo -e "$parent1\t666\t+" | perl -ne 'print "$_" x'$len'' > filler.bed.temp
 echo "255,0,0" | perl -ne 'print "$_" x'$len'' > colour.bed.temp
 cut -f 1,2,3 "$parent1"_unique_in_"$hybrid".bed| paste - filler.bed.temp > partial.bed.temp
-cut -f 2,3 "$parent1"_unique_in_"$hybrid".bed | paste partial.bed.temp - colour.bed.temp > "$parent1"_in_$hybrid.bed
+cut -f 2,3 "$parent1"_unique_in_"$hybrid".bed | paste partial.bed.temp - colour.bed.temp > "$parent1"_in_"$hybrid".bed
 rm *.temp
 
 bedtools intersect -wa -a "$hybrid".filtered.bed -b unique_in_"$parent2".bed | cut -f 1,2,3 > "$parent2"_unique_in_"$hybrid".bed
@@ -54,7 +54,7 @@ len=$(wc -l "$parent2"_unique_in_"$hybrid".bed | cut -f 1 -d ' ')
 echo -e "$parent2\t666\t+" | perl -ne 'print "$_" x'$len'' > filler.bed.temp
 echo "0,0,255" | perl -ne 'print "$_" x'$len'' > colour.bed.temp
 cut -f 1,2,3 "$parent2"_unique_in_"$hybrid".bed | paste - filler.bed.temp > partial.bed.temp
-cut -f 2,3 "$parent2"_unique_in_"$hybrid".bed | paste partial.bed.temp - colour.bed.temp > "$parent1"_in_$hybrid.bed
+cut -f 2,3 "$parent2"_unique_in_"$hybrid".bed | paste partial.bed.temp - colour.bed.temp > "$parent2"_in_$hybrid.bed
 rm *.temp
 echo "	...done!"
 
@@ -96,7 +96,7 @@ mv "$hybrid"_alleles_at_common_sites.bed "$parental"_diagnostic_sites_in_"hybrid
 len=$(wc -l "$parental"_diagnostic_sites_in_"hybrid".bed | cut -f 1 -d ' ')
 #	Package everything, color-coded
 echo -e "$parental\t666\t+" | perl -ne 'print "$_" x'$len'' > filler.bed.temp
-echo "255,0,0" | perl -ne 'print "$_" x'$len'' > colour.bed.temp
+echo "0,0,255" | perl -ne 'print "$_" x'$len'' > colour.bed.temp
 cut -f 1,2,3 "$parental"_diagnostic_sites_in_"hybrid".bed | paste - filler.bed.temp > partial.bed.temp
 cut -f 2,3 "$parental"_diagnostic_sites_in_"hybrid".bed | paste partial.bed.temp - colour.bed.temp >> "$parental"_in_"$hybrid".bed
 rm *.temp
