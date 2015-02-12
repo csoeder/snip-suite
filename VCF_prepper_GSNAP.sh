@@ -2,7 +2,7 @@
 
 ref_genome=$1
 genome_index=$2 	#	cdjones_lab/csoeder/rich_introgression/ref_genomes/GMAP_ref/
-single_end_1=$3
+single=$3
 file_out=$4
 
 #	re: building GMAP index:	gmap_build -d dmel-all-chromosome-r5.57 -D GMAP_ref dmel-all-chromosome-r5.57.fasta	
