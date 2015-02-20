@@ -45,6 +45,8 @@ for loc in np.unique(locations):
 	loc_dict[loc] = len(locations[locations == loc])
 
 
+print "Mean Frequency:	%s"%np.mean(agreement)
+print "Median Frequency:	%s"%np.median(agreement)
 
 plt.hist(agreement, bins=18)
 plt.title('Non-Homozygous Non-Reference Allele Frequencies\n(%s of %s Total Called SNPs)'%tuple([len(agreement), total_num]))
@@ -52,6 +54,7 @@ plt.xlabel('Fraction of Quality Reads Supporting a Non-Ref')
 plt.ylabel('Number of SNPs with Measured Frequency')
 plt.savefig('heterozygous_hist.png')
 plt.hold(False)
+plt.close()
 plt.pie(loc_dict.values(), labels=loc_dict.keys())
 plt.title('Non-Homozygous Non-Reference Alleles by Chromosome')
 plt.savefig('heterozygous_pie.png')
