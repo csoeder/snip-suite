@@ -12,13 +12,15 @@ import numpy as np
 
 file_in = sys.argv[1]
 file_out = sys.argv[2]
-lower_bound = sys.argv[3]
-upper_bound = sys.argv[4]
+lower_bound = float(sys.argv[3])
+upper_bound = float(sys.argv[4])
 
 try:
 	cov_thresh = float(sys.argv[5])	#set the threshold for coverage
 except IndexError:
 	cov_thresh = 10
+
+print ""
 
 phial = open(file_out, 'w')
 agreement = []
