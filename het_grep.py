@@ -20,7 +20,9 @@ try:
 except IndexError:
 	cov_thresh = 10
 
-print ""
+print "Reading from %s\n"%file_in
+print "Writing to %s\n"%file_out
+print "Selecting SNP sites with quality coverage greater than %s and supported by between %s%% and %s%% of reads." % tuple([cov_thresh, lower_bound*100, upper_bound*100])
 
 phial = open(file_out, 'w')
 agreement = []
@@ -49,7 +51,7 @@ plt.title('Non-Homozygous Non-Reference Allele Frequencies\n(%s of %s Total Call
 plt.xlabel('Fraction of Quality Reads Supporting a Non-Ref')
 plt.ylabel('Number of SNPs with Measured Frequency')
 plt.subplot(212)
-plt.pie(loc_dict.values(), label=loc_dict.keys())
+plt.pie(loc_dict.values(), labels=loc_dict.keys())
 plt.legend()
 plt.title('Non-Homozygous Non-Reference Alleles by Chromosome')
 plt.savefig('heterozygous_stats.png')
