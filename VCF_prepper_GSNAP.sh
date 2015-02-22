@@ -6,6 +6,7 @@ paired_end_1=$3
 paired_end_2=$4
 file_out=$5
 
+
 #	re: building GMAP index:	gmap_build -d dmel-all-chromosome-r5.57 -D GMAP_ref dmel-all-chromosome-r5.57.fasta	
 #	re: -d option ...	GSNAP seems to insist the the GMAP index be referenced relative to /proj/seq/data/gsnap/reference_genomes/ 
 
