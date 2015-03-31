@@ -5,9 +5,13 @@ parent2=$2
 hybrid=$3
 
 echo "	Filtering the variant sites...	"
-vcftools --vcf "$parent1".vcf --stdout --remove-indels --non-ref-af 0.95 --minDP 10 --recode | vcf2bed > "$parent1".filtered.bed  
-vcftools --vcf "$parent2".vcf --stdout --remove-indels --non-ref-af 0.95 --minDP 10 --recode | vcf2bed > "$parent2".filtered.bed  
-vcftools --vcf "$hybrid".vcf --stdout --remove-indels --non-ref-af 0.95 --minDP 10 --recode | vcf2bed > "$hybrid".filtered.bed 
+#vcftools --vcf "$parent1".vcf --stdout --remove-indels --non-ref-af 0.95 --minDP 10 --recode | vcf2bed > "$parent1".filtered.bed  
+#vcftools --vcf "$parent2".vcf --stdout --remove-indels --non-ref-af 0.95 --minDP 10 --recode | vcf2bed > "$parent2".filtered.bed  
+#vcftools --vcf "$hybrid".vcf --stdout --remove-indels --non-ref-af 0.95 --minDP 10 --recode | vcf2bed > "$hybrid".filtered.bed 
+vcftools --vcf "$parent1".vcf --stdout --remove-indels  --recode | vcf2bed > "$parent1".filtered.bed  
+vcftools --vcf "$parent2".vcf --stdout --remove-indels  --recode | vcf2bed > "$parent2".filtered.bed  
+vcftools --vcf "$hybrid".vcf --stdout --remove-indels --recode | vcf2bed > "$hybrid".filtered.bed 
+
 echo "	...done!	"
 
 #	make 3-column .clipped.bed files to disregard all but position 
@@ -102,7 +106,7 @@ cut -f 2,3 "$parental"_diagnostic_sites_in_"hybrid".bed | paste partial.bed.temp
 rm *.temp
 echo "	...done!	"
 
-echo 'track name=""$hybrid" ancestry" description=""$hybrid" ancestry" itemRgb="On"' > "$hybrid"_ancestry.bed
+echo 'track name="$hybrid ancestry" description="$hybrid ancestry" itemRgb="On"' > "$hybrid"_ancestry.bed
 cat "$parent1"_in_"$hybrid".bed "$parent2"_in_"$hybrid".bed >> "$hybrid"_ancestry.bed
 
 
