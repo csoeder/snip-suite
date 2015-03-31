@@ -28,15 +28,15 @@ for i in range(0, numwins):
 	phial.write('2L\t%s\t%s\n'%tuple([start, start+windowsize]))
 phial.close()
 
-call('bedtools intersect -abam %s -b bedmask.bed | samtools view -h - > %s.sam '%tuple([parent1, fileout]), shell=True)
-call('bedtools intersect -v -abam %s -b bedmask.bed | samtools view - >> %s.sam '%tuple([parent2, fileout]), shell=True)
+call('bedtools intersect -abam %s -b bedmask.bed | samtools view -h - > %s.fine.sam '%tuple([parent1, fileout]), shell=True)
+call('bedtools intersect -v -abam %s -b bedmask.bed | samtools view - >> %s.fine.sam '%tuple([parent2, fileout]), shell=True)
 print "assembled"
-call('samtools view -Shb %s.sam > %s.bam'%tuple([fileout, fileout]), shell=True)
+call('samtools view -Shb %s.fine.sam > %s.fine.bam'%tuple([fileout, fileout]), shell=True)
 print "converted"
-call('samtools sort %s.bam %s.sort'%tuple([fileout, fileout]), shell=True)
+call('samtools sort %s.fine.bam %s.fine.sort'%tuple([fileout, fileout]), shell=True)
 print "sorted"
-call('rm %s.sam'%fileout)
-call('rm %s.bam'%fileout)
+#call('rm %s.sam'%fileout)
+#call('rm %s.bam'%fileout)
 
 
 

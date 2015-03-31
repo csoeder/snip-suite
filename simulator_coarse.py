@@ -22,15 +22,15 @@ L2=23011544	#Size of the 2L chromosome
 
 breakpoint = rn(1, L2)
 
-call('samtools view -h %s 2L:1-%s > %s.sam'%tuple([parent1, breakpoint, fileout]), shell=True)
-call('samtools view %s 2L:%s-%s >> %s.sam'%tuple([parent2, L2, breakpoint, fileout]), shell=True)
+call('samtools view -h %s 2L:1-%s > %s.coarse.sam'%tuple([parent1, breakpoint, fileout]), shell=True)
+call('samtools view %s 2L:%s-%s >> %s.coarse.sam'%tuple([parent2, L2, breakpoint, fileout]), shell=True)
 print "print assembled"
-call('samtools view -Shb %s.sam > %s.bam'%tuple([fileout, fileout]), shell=True)
+call('samtools view -Shb %s.coarse.sam > %s.coarse.bam'%tuple([fileout, fileout]), shell=True)
 print "converted"
-call('samtools sort %s.bam %s.sort'%tuple([fileout, fileout]), shell=True)
+call('samtools sort %s.coarse.bam %s.coarse.sort'%tuple([fileout, fileout]), shell=True)
 print "sorted"
-call('rm %s.sam'%fileout)
-call('rm %s.bam'%fileout)
+#call('rm %s.sam'%fileout)
+#call('rm %s.bam'%fileout)
 
 
 
